@@ -364,7 +364,8 @@ class FinanceController {
         const accountantPayment = totalRevenue * 0.30;
         const remainingAfterAccountant = totalRevenue - accountantPayment;
         const partnerPayment = remainingAfterAccountant * 0.35;
-        const yourProfit = remainingAfterAccountant * 0.65;
+        const yourGrossProfit = remainingAfterAccountant * 0.65;
+        const yourProfit = yourGrossProfit - totalExpenses;
         
         // Update UI
         document.getElementById('totalRevenueSummary').textContent = this.formatCurrency(totalRevenue);
