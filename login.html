@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Controle Financeiro - Cabeçotes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFD700; /* Dourado */
+            --secondary-color: #FFA500; /* Laranja escuro */
+            --success-color: #32CD32; /* Verde limão */
+            --danger-color: #DC143C; /* Vermelho escuro */
+            --warning-color: #FF8C00; /* Laranja escuro */
+            --dark-bg: #0A0A0A; /* Preto quase puro */
+            --darker-bg: #050505; /* Preto puro */
+            --light-bg: #1A1A1A; /* Cinza escuro */
+            --text-light: #E5E5E5; /* Cinza claro */
+            --text-dim: #A0A0A0; /* Cinza médio */
+            --gold-gradient: linear-gradient(135deg, #FFD700, #FFA500);
+            --border-gold: rgba(255, 215, 0, 0.3);
+        }
+
+        body {
+            background: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: var(--darker-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.8),
+                0 0 100px rgba(255, 215, 0, 0.1),
+                inset 0 1px 0 rgba(255, 215, 0, 0.2);
+            padding: 60px 40px;
+            max-width: 450px;
+            width: 100%;
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gold-gradient);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .login-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+
+        .login-header p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .form-floating {
+            margin-bottom: 25px;
+        }
+
+        .form-control {
+            background: var(--light-bg);
+            border: 2px solid var(--border-gold);
+            color: var(--text-light);
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            height: 60px;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.2);
+            background: var(--light-bg);
+            color: var(--text-light);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-dim);
+        }
+
+        .form-floating label {
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label {
+            color: var(--primary-color);
+        }
+
+        .btn-login {
+            background: var(--gold-gradient);
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            font-weight: 600;
+            color: var(--dark-bg);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-login:hover::before {
+            left: 100%;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .alert {
+            background: rgba(220, 20, 60, 0.1);
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            color: var(--danger-color);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .alert-success {
+            background: rgba(50, 205, 50, 0.1);
+            border: 1px solid rgba(50, 205, 50, 0.3);
+            color: var(--success-color);
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: var(--text-light);
+        }
+
+        .remember-me input[type="checkbox"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-color);
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner-border {
+            width: 2rem;
+            height: 2rem;
+            border-color: var(--primary-color);
+            border-right-color: transparent;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 40px 20px;
+                margin: 10px;
+            }
+
+            .login-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1><i class="bi bi-cash-stack"></i> 💰</h1>
+            <h1>Controle Financeiro</h1>
+            <p>Cabeçotes</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="form-floating input-icon">
+                <input type="text" class="form-control" id="username" placeholder="Usuário" required>
+                <label for="username"><i class="bi bi-person"></i> Usuário</label>
+                <i class="bi bi-person-fill"></i>
+            </div>
+
+            <div class="form-floating input-icon">
+                <input type="password" class="form-control" id="password" placeholder="Senha" required>
+                <label for="password"><i class="bi bi-lock"></i> Senha</label>
+                <i class="bi bi-lock-fill"></i>
+            </div>
+
+            <div class="remember-me">
+                <input type="checkbox" id="remember">
+                <label for="remember">Lembrar-me</label>
+            </div>
+
+            <button type="submit" class="btn btn-login">
+                <i class="bi bi-box-arrow-in-right"></i> Entrar
+            </button>
+        </form>
+
+        <div class="alert" id="alertMessage"></div>
+
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Carregando...</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const alertMessage = document.getElementById('alertMessage');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            // Limpar alertas anteriores
+            alertMessage.style.display = 'none';
+            alertMessage.className = 'alert';
+            
+            // Mostrar loading
+            loadingSpinner.style.display = 'block';
+            
+            // Simular tempo de carregamento
+            setTimeout(() => {
+                loadingSpinner.style.display = 'none';
+                
+                // Validar credenciais
+                if (username === 'Bagalau7' && password === 'Qwe84225054') {
+                    // Login bem-sucedido
+                    alertMessage.className = 'alert alert-success';
+                    alertMessage.innerHTML = '<i class="bi bi-check-circle"></i> Login realizado com sucesso! Redirecionando...';
+                    alertMessage.style.display = 'block';
+                    
+                    // Definir sessão de login
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    sessionStorage.setItem('username', username);
+                    
+                    // Salvar preferência de lembrar-me
+                    if (document.getElementById('remember').checked) {
+                        localStorage.setItem('rememberUser', username);
+                    } else {
+                        localStorage.removeItem('rememberUser');
+                    }
+                    
+                    // Redirecionar para a página principal após 2 segundos
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    // Login falhou
+                    alertMessage.className = 'alert';
+                    alertMessage.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Usuário ou senha incorretos!';
+                    alertMessage.style.display = 'block';
+                    
+                    // Limpar campos
+                    document.getElementById('password').value = '';
+                    document.getElementById('password').focus();
+                }
+            }, 1000);
+        });
+
+        // Verificar se há usuário salvo
+        window.addEventListener('load', function() {
+            const rememberedUser = localStorage.getItem('rememberUser');
+            if (rememberedUser) {
+                document.getElementById('username').value = rememberedUser;
+                document.getElementById('remember').checked = true;
+                document.getElementById('password').focus();
+            } else {
+                document.getElementById('username').focus();
+            }
+        });
+    </script>
+</body>
+</html>

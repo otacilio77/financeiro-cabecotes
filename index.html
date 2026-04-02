@@ -1,12 +1,577 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Finanças </title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Financeiro - Cabeçotes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFD700; /* Dourado */
+            --secondary-color: #FFA500; /* Laranja escuro */
+            --success-color: #32CD32; /* Verde limão */
+            --danger-color: #DC143C; /* Vermelho escuro */
+            --warning-color: #FF8C00; /* Laranja escuro */
+            --dark-bg: #0A0A0A; /* Preto quase puro */
+            --darker-bg: #050505; /* Preto puro */
+            --light-bg: #1A1A1A; /* Cinza escuro */
+            --text-light: #E5E5E5; /* Cinza claro */
+            --text-dim: #A0A0A0; /* Cinza médio */
+            --gold-gradient: linear-gradient(135deg, #FFD700, #FFA500);
+            --border-gold: rgba(255, 215, 0, 0.3);
+        }
+
+        body {
+            background: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-light);
+        }
+
+        .main-container {
+            background: var(--darker-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.8),
+                0 0 100px rgba(255, 215, 0, 0.1),
+                inset 0 1px 0 rgba(255, 215, 0, 0.2);
+            margin: 20px auto;
+            max-width: 1400px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--gold-gradient);
+            color: var(--dark-bg);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .header h1 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 3rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+
+        .content-area {
+            padding: 40px;
+        }
+
+        .card-custom {
+            background: var(--light-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 15px;
+            box-shadow: 
+                0 8px 32px rgba(0,0,0,0.4),
+                0 0 20px rgba(255, 215, 0, 0.05);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 12px 40px rgba(0,0,0,0.6),
+                0 0 30px rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .card-header-custom {
+            background: linear-gradient(135deg, var(--light-bg), var(--darker-bg));
+            border-bottom: 1px solid var(--border-gold);
+            border-radius: 15px 15px 0 0 !important;
+            padding: 25px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .form-control, .form-select {
+            background: var(--darker-bg);
+            border: 2px solid var(--border-gold);
+            color: var(--text-light);
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.2);
+            background: var(--darker-bg);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-dim);
+        }
+
+        .form-label {
+            color: var(--text-light);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .input-group-text {
+            background: var(--light-bg);
+            border: 2px solid var(--border-gold);
+            border-right: none;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .btn-primary-custom {
+            background: var(--gold-gradient);
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-weight: 600;
+            color: var(--dark-bg);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary-custom:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: var(--darker-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gold-gradient);
+        }
+
+        .metric-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--text-light);
+        }
+
+        .metric-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .profit { color: var(--success-color); }
+        .loss { color: var(--danger-color); }
+        .neutral { color: var(--warning-color); }
+
+        .history-item {
+            background: var(--darker-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .history-item:hover {
+            background: var(--light-bg);
+            transform: translateX(5px);
+            border-color: var(--primary-color);
+        }
+
+        .period-filter {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .period-btn {
+            padding: 12px 25px;
+            border: 2px solid var(--border-gold);
+            background: var(--darker-bg);
+            color: var(--text-light);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .period-btn:hover {
+            border-color: var(--primary-color);
+            background: var(--light-bg);
+            color: var(--primary-color);
+        }
+
+        .period-btn.active {
+            background: var(--gold-gradient);
+            color: var(--dark-bg);
+            border-color: var(--primary-color);
+        }
+
+        .alert-info {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--border-gold);
+            color: var(--primary-color);
+        }
+
+        .alert-success {
+            background: rgba(50, 205, 50, 0.1);
+            border: 1px solid rgba(50, 205, 50, 0.3);
+            color: var(--success-color);
+        }
+
+        .alert-danger {
+            background: rgba(220, 20, 60, 0.1);
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            color: var(--danger-color);
+        }
+
+        .btn-outline-danger {
+            border-color: var(--danger-color);
+            color: var(--danger-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-danger:hover {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+            color: white;
+        }
+
+        .text-muted {
+            color: var(--text-dim) !important;
+        }
+
+        .small {
+            color: var(--text-light);
+        }
+
+        .section-title {
+            color: var(--text-light) !important;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .history-description {
+            color: var(--text-light) !important;
+        }
+
+        .history-date {
+            color: var(--text-light) !important;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-color: var(--primary-color);
+            border-right-color: transparent;
+        }
+
+        @media (max-width: 1200px) {
+            .summary-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .period-filter {
+                justify-content: center;
+            }
+
+            .content-area {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1><i class="bi bi-cash-stack"></i> 💰 Controle Financeiro - Cabeçotes</h1>
+            <button class="btn btn-outline-light btn-sm" onclick="logout()" style="position: absolute; top: 20px; right: 20px;">
+                <i class="bi bi-box-arrow-right"></i> Sair
+            </button>
+        </div>
+
+        <div class="content-area">
+            <!-- Formulário de Entrada de Dados -->
+            <div class="card card-custom">
+                <div class="card-header card-header-custom">
+                    <h5 class="mb-0"><i class="bi bi-plus-circle"></i> Nova Movimentação</h5>
+                </div>
+                <div class="card-body">
+                    <form id="financeForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="transactionType" class="form-label">Tipo de Movimentação</label>
+                                <select class="form-select" id="transactionType" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="revenue">💰 Entrada (Receita)</option>
+                                    <option value="expense">💸 Gasto</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="date" class="form-label">Data</label>
+                                <input type="date" class="form-control" id="date" required readonly>
+                                <small class="text-muted">Data atual definida automaticamente</small>
+                            </div>
+                        </div>
+
+                        <!-- Campos para Entrada -->
+                        <div id="revenueFields" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="revenue" class="form-label">Valor da Receita</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">R$</span>
+                                        <input type="number" class="form-control" id="revenue" step="0.01" min="0" placeholder="0,00">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="category" class="form-label">Categoria da Entrada</label>
+                                    <select class="form-select" id="revenueCategory">
+                                        <option value="">Selecione...</option>
+                                        <option value="KL">KL</option>
+                                        <option value="Pagamento Adiantado">Pagamento Adiantado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Campos para Gasto -->
+                        <div id="expenseFields" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="expenseAmount" class="form-label">Valor do Gasto</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">R$</span>
+                                        <input type="number" class="form-control" id="expenseAmount" step="0.01" min="0" placeholder="0,00">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="expenseCategory" class="form-label">Categoria do Gasto</label>
+                                    <select class="form-select" id="expenseCategory">
+                                        <option value="">Selecione...</option>
+                                        <option value="meta">Meta Ads</option>
+                                        <option value="google">Google Ads</option>
+                                        <option value="outros">Outros Gastos</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Campos Comuns -->
+                        <div id="commonFields" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="description" class="form-label">Descrição</label>
+                                    <input type="text" class="form-control" id="description" placeholder="Descreva esta movimentação">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary-custom w-100">
+                            <i class="bi bi-plus-circle"></i> Adicionar Movimentação
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            
+            
+            <!-- Filtros de Período -->
+            <div class="card card-custom">
+                <div class="card-header card-header-custom">
+                    <h5 class="mb-0"><i class="bi bi-funnel"></i> Filtrar por Período</h5>
+                </div>
+                <div class="card-body">
+                    <div class="period-filter">
+                        <button class="period-btn active" data-period="total">Total</button>
+                        <button class="period-btn" data-period="monthly">Mensal</button>
+                        <button class="period-btn" data-period="weekly">Semanal</button>
+                    </div>
+                    
+                    <div class="row" id="periodSelector" style="display: none;">
+                        <div class="col-md-6">
+                            <label for="periodSelect" class="form-label">Selecione o período</label>
+                            <select class="form-select" id="periodSelect">
+                                <option value="">Selecione...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Histórico e Resumo -->
+            <div class="card card-custom">
+                <div class="card-header card-header-custom">
+                    <h5 class="mb-0"><i class="bi bi-clock-history"></i> Histórico e Resumo</h5>
+                </div>
+                <div class="card-body">
+                    <div class="loading" id="loading">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Carregando...</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Resumo Financeiro -->
+                    <div id="periodSummary" style="display: none;">
+                        <h6 class="section-title">Resumo do Período</h6>
+                        <div class="summary-grid">
+                            <div class="metric-card">
+                                <div class="metric-label">Total Receitas</div>
+                                <div class="metric-value profit" id="totalRevenueSummary">R$ 0,00</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Total Gastos</div>
+                                <div class="metric-value loss" id="totalExpensesSummary">R$ 0,00</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Laranja 🍊</div>
+                                <div class="metric-value" id="accountantToPay">R$ 0,00</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Sócio 👨</div>
+                                <div class="metric-value" id="partnerToPay">R$ 0,00</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Seu Lucro Final</div>
+                                <div class="metric-value profit" id="yourProfit">R$ 0,00</div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info mt-3">
+                            <i class="bi bi-info-circle"></i> <strong>Atenção:</strong> Laranja 🍊 e Sócio 👨 só participam das entradas. Gastos são 100% seus.
+                        </div>
+                        
+                        <hr class="my-4">
+                    </div>
+
+                    <div id="historyList">
+                        <h6 class="section-title">Histórico de Movimentações</h6>
+                        <div id="historyItems">
+                            <p class="text-muted">Nenhuma movimentação registrada ainda.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Verificar se o usuário está logado
+        if (!sessionStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+
+        // Função de logout
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                sessionStorage.removeItem('isLoggedIn');
+                sessionStorage.removeItem('username');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+    <script src="script-supabase.js"></script>
+</body>
 </html>
