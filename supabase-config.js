@@ -7,7 +7,7 @@
 
 const supabaseConfig = {
     url: 'https://dvlozhmtiiygunbyhjg.supabase.co', // URL do seu projeto Supabase
-    anonKey: 'sb_publishable_4tuVlcJKTuiOBlbuJERB8w_hkymckoW', // Chave pública do projeto
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2bG96aG10aWl5Z3VuYnloamlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDk5NzIsImV4cCI6MjA5MDcyNTk3Mn0.flosG4sMZHfTre23mW1G3SFBa4jWucbmsEyKwb-vcpg', // Chave pública do projeto
     headers: {
         'apikey': 'sb_publishable_4tuVlcJKTuiOBlbuJERB8w_hkymckoW',
         'Content-Type': 'application/json'
